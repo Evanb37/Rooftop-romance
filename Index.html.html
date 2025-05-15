@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooftop Romance</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #0d0d0d;
+      background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      color: #f2f2f2;
+    }
+
+    #game-box {
+      width: 90%;
+      max-width: 700px;
+      background-color: rgba(0, 0, 0, 0.75);
+      border: 2px solid #444;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 40px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    #story {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      white-space: pre-line;
+    }
+
+    #choices button {
+      background-color: #222;
+      color: #f2f2f2;
+      border: 1px solid #555;
+      padding: 12px;
+      margin-top: 10px;
+      width: 100%;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    #choices button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-box">
+    <div id="story"></div>
+    <div id="choices"></div>
+  </div>
+
+  <script>
+    const storyElement = document.getElementById("story");
+    const choicesElement = document.getElementById("choices");
+
+    const scenes = {
+      start: {
+        text: "The city hums below, lights flickering like stars scattered across the skyline. You stand on the rooftop, the wind tugging at your shirt, the scent of rain and neon thick in the air.\n\nA door creaks open behind you.\n\nShe steps out—barefoot, wild-eyed, a black leather jacket sliding off one shoulder. Raven.\n\n\"You always brood on rooftops, or is tonight special?\"",
+        choices: [
+          { text: "Then let's skip to the interesting part.", next: "steamy" },
+          { text: "You caught me off guard... I like that.", next: "intrigued" }
+        ]
+      },
+      steamy: {
+        text: "\"Mmm. I like a man who doesn’t waste time.\"\n\nYou step closer, your silhouettes etched in moonlight.\n\n\"And I like a woman who knows what she wants.\"\n\n\"Lucky us, then.\"\n\nHer voice is smoke and temptation. The city fades. There's only heat between you, and the soft scrape of her fingertips at your collar.",
+        choices: []
+      },
+      intrigued: {
+        text: "\"Off guard? That’s rare. You're hard to read.\"\n\n\"You like mysteries?\"\n\n\"Only if I get to solve them.\"\n\nShe circles you, slow, like a question mark wrapped in leather and hunger. You’re not sure if she’ll kiss you or steal your secrets. Maybe both.",
+        choices: []
+      }
+    };
+
+    function showScene(key) {
+      const scene = scenes[key];
+      storyElement.innerText = scene.text;
+      choicesElement.innerHTML = "";
+      scene.choices.forEach(choice => {
+        const button = document.createElement("button");
+        button.innerText = choice.text;
+        button.onclick = () => showScene(choice.next);
+        choicesElement.appendChild(button);
+      });
+    }
+
+    showScene("start");
+  </script>
+</body>
+</html>
